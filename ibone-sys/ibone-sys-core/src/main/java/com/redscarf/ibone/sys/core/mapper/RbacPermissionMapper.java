@@ -2,6 +2,10 @@ package com.redscarf.ibone.sys.core.mapper;
 
 import com.redscarf.ibone.sys.core.model.po.RbacPermissionEntity;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
+
+import java.util.List;
 
 /**
  * <p>function:
@@ -11,8 +15,55 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface RbacPermissionMapper extends IBaseMapper<RbacPermissionEntity>{
+    String ALL_COLUMN =
+            " a.id AS id , " +
+            " a.system_id AS systemId , " +
+            " a.menu_id AS menuId , " +
+            " a.name AS name , " +
+            " a.type AS type , " +
+            " a.permission_value AS permissionValue , " +
+            " a.add_time AS addTime , " +
+            " a.update_time AS updateTime  " ;
 
 
+    String TABLE_NAME = " rbac_permission ";
+    String TABLE_NAME_AS = TABLE_NAME + " AS a ";
 
+    @Select({
+            "<script>",
+            "SELECT   " + ALL_COLUMN,
+            "FROM  "  + TABLE_NAME_AS,
+            "<where> " ,
+                "<if test = \"name != null and name != '' \" > " ,
+                "AND name LIKE CONCAT('%', #{name}, '%') ",
+                "</if> " ,
+                "<if test = \"permissionValue != null and permissionValue != '' \"> " ,
+                "AND permission_value LIKE CONCAT('%', #{permissionValue}, '%') " ,
+                "</if> " ,
+            "</where> " ,
+            "</script>"
+    })
+    List<RbacPermissionEntity> findPageByNameAndPermissionValue(@Param("name") String name,
+                                                                @Param("permissionValue") String permissionValue);
 
+    @Select({
+            "<script>",
+            "SELECT   " + ALL_COLUMN,
+            "FROM  "  + TABLE_NAME_AS,
+            "INNER JOIN  rbac_role_permission AS rp ON rp.permission_id = a.id " ,
+            "WHERE rp.role_id = #{roleId} ",
+            "</script>"
+    })
+    List<RbacPermissionEntity> findPermissionsByRoleId(@Param("roleId")int roleId);
+
+    @Select({
+            "<script>",
+            "SELECT   " + ALL_COLUMN,
+            "FROM  "  + TABLE_NAME_AS,
+            "WHERE 1=1 " ,
+            "AND  a.id IN ",
+            "<foreach item='id' index='index' collection='ids' open='(' separator=',' close=')'> #{id} </foreach> " ,
+            "</script>"
+    })
+    List<RbacPermissionEntity> findByIdIn(@Param("ids")int[] ids);
 }

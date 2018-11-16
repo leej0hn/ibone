@@ -66,7 +66,7 @@ public class TestUserModelMapperTest extends BaseDaoTest {
 
     @Test
     public void testSelectAll() throws Exception{
-        int pageNum = 1;
+        int pageNum = 3;
         int pageSize = 2;
         PageHelper.startPage(pageNum, pageSize);
         List<TestUserModel> testUserModels = mapper.selectAll();

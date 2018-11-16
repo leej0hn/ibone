@@ -13,6 +13,4 @@ import org.apache.ibatis.annotations.Mapper;
 public interface RbacOrganizationMapper extends IBaseMapper<RbacOrganizationEntity>{
 
 
-
-
 }

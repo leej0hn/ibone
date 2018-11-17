@@ -3,22 +3,22 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>ibone-parent</artifactId>
+        <artifactId>ibone-sm</artifactId>
         <groupId>com.redscarf.ibone</groupId>
         <version>1.0.0</version>
-        <relativePath>../ibone-parent/pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>ibone-sm-monitor-publisher</artifactId>
+    <name>ibone-sm-monitor-publisher</name>
     <version>1.0.0</version>
-    <artifactId>ibone-sm</artifactId>
-    <name>ibone-sm</name>
-    <modules>
-        <module>ibone-sm-register</module>
-        <module>ibone-sm-monitor-publisher</module>
-    </modules>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 
-
-
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>

@@ -14,6 +14,7 @@
         <module>ibone-sys</module>
         <module>ibone-ui</module>
         <module>ibone-errors</module>
+        <module>ibone-configuration</module>
     </modules>
     <packaging>pom</packaging>
 

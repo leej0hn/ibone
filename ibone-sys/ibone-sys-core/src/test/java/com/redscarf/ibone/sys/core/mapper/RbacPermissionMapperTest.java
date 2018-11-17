@@ -20,7 +20,7 @@ public class RbacPermissionMapperTest extends BaseDaoTest {
 
     @Test
     public void testFindPageByNameAndPermissionValue() throws Exception{
-        List<RbacPermissionEntity> menuList = mapper.findPageByNameAndPermissionValue("","");
+        List<RbacPermissionEntity> menuList = mapper.findPageByNameAndPermissionValue("查看");
         System.out.println(menuList);
     }
 

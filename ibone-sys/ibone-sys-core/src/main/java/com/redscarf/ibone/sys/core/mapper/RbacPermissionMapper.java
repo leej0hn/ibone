@@ -34,17 +34,14 @@ public interface RbacPermissionMapper extends IBaseMapper<RbacPermissionEntity>{
             "SELECT   " + ALL_COLUMN,
             "FROM  "  + TABLE_NAME_AS,
             "<where> " ,
-                "<if test = \"name != null and name != '' \" > " ,
-                "AND name LIKE CONCAT('%', #{name}, '%') ",
-                "</if> " ,
-                "<if test = \"permissionValue != null and permissionValue != '' \"> " ,
-                "AND permission_value LIKE CONCAT('%', #{permissionValue}, '%') " ,
+                "<if test = \"searchKey != null and searchKey != '' \" > " ,
+                "OR name LIKE CONCAT('%', #{searchKey}, '%') ",
+                "OR permission_value LIKE CONCAT('%', #{searchKey}, '%') " ,
                 "</if> " ,
             "</where> " ,
             "</script>"
     })
-    List<RbacPermissionEntity> findPageByNameAndPermissionValue(@Param("name") String name,
-                                                                @Param("permissionValue") String permissionValue);
+    List<RbacPermissionEntity> findPageByNameAndPermissionValue(@Param("searchKey") String searchKey);
 
     @Select({
             "<script>",

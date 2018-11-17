@@ -1,9 +1,7 @@
 package com.redscarf.ibone.sys.core.mapper;
 
 import com.redscarf.ibone.sys.core.model.po.RbacRoleEntity;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -34,17 +32,14 @@ public interface RbacRoleMapper extends IBaseMapper<RbacRoleEntity>{
             "SELECT   " + ALL_COLUMN,
             "FROM  "  + TABLE_NAME_AS,
             "<where> " ,
-            "<if test = \"name != null and name != '' \" > " ,
-            "AND name LIKE CONCAT('%', #{name}, '%') ",
-            "</if> " ,
-            "<if test = \"title != null and title != '' \"> " ,
-            "AND permission_value LIKE CONCAT('%', #{permissionValue}, '%') " ,
-            "</if> " ,
+                "<if test = \"searchKey != null and searchKey != '' \" > " ,
+                "OR name LIKE CONCAT('%', #{searchKey}, '%') ",
+                "OR title LIKE CONCAT('%', #{searchKey}, '%') " ,
+                "</if> " ,
             "</where> " ,
             "</script>"
     })
-    List<RbacRoleEntity> findPageByNameAndTitle(@Param("name") String name,
-                                                @Param("title") String title);
+    List<RbacRoleEntity> findPageByNameAndTitle(@Param("searchKey") String searchKey);
 
 
     @Select({
@@ -78,5 +73,67 @@ public interface RbacRoleMapper extends IBaseMapper<RbacRoleEntity>{
             "</script>"
     })
     List<RbacRoleEntity> findByName(@Param("name")String name);
+
+    /**
+     * 删除角色菜单
+     * @param roleId
+     * @param menuId
+     */
+    @Delete({
+            "<script>",
+            "DELETE " ,
+            "FROM rbac_role_menu" ,
+            "WHERE role_id = #{roleId} " ,
+            "AND menu_id = #{menuId}",
+            "</script>"
+    })
+    void deleteRoleMenu(@Param("roleId")int roleId,@Param("menuId")int menuId);
+
+    /**
+     * 关联角色菜单
+     * @param roleId
+     * @param menuId
+     */
+    @Insert({
+            "<script>",
+            "INSERT  " ,
+            "INTO rbac_role_menu" ,
+            "(role_id , menu_id)  " ,
+            "values (#{roleId},#{menuId}) ",
+            "</script>"
+    })
+    void insertRoleMenu(@Param("roleId")int roleId,@Param("menuId")int menuId);
+
+
+    /**
+     * 关联角色权限关系
+     * @param roleId
+     * @param permissionId
+     */
+    @Insert({
+            "<script>",
+            "INSERT  " ,
+            "INTO rbac_role_permission  " ,
+            "(role_id , permission_id)  " ,
+            "values (#{roleId},#{permissionId}) ",
+            "</script>"
+    })
+    void insertRolePermission(@Param("roleId")int roleId,@Param("permissionId")int permissionId);
+
+    /**
+     * 删除角色权限关系
+     * @param roleId
+     * @param permissionId
+     */
+    @Delete({
+            "<script>",
+            "DELETE  " ,
+            "FROM rbac_role_permission  " ,
+            "WHERE role_id = #{roleId} " ,
+            "AND permission_id = #{permissionId}",
+            "</script>"
+    })
+    void deleteRolePermission(@Param("roleId")int roleId,@Param("permissionId")int permissionId);
+
 
 }

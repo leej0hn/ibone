@@ -268,17 +268,21 @@ public class UserService {
         if(assignRoleModel.getUserRole() != null && assignRoleModel.getUserRole().length > 0){
             roleEntities = roleMapper.findByIdIn(assignRoleModel.getUserRole());
         }
-        //TODO：持久化
+        //持久化
 //        userEntity.setRoles(roleEntities);
+        for (RbacRoleEntity roleEntity : roleEntities) {
+            userMapper.insertUserRole(userEntity.getId(),roleEntity.getId());
+        }
+
     }
 
     /**
      * 分页查询
      * @return
      */
-    public PageInfo<RbacUserEntity> findPage(String username, String realname , String phone,String email, PageRequest pageRequest){
+    public PageInfo<RbacUserEntity> findPage(String searchKey, PageRequest pageRequest){
         PageHelper.startPage(pageRequest.getPage(), pageRequest.getSize());
-        List<RbacUserEntity> userList = userMapper.findPageByUserNameAndRealNameAndPhoneAndEmail(username, realname, phone, email);
+        List<RbacUserEntity> userList = userMapper.findPageByUserNameAndRealNameAndPhoneAndEmail(searchKey);
         //分页查找
         return new PageInfo<>(userList);
     }
@@ -288,7 +292,7 @@ public class UserService {
      * @param assignMenuModel
      */
     public void assignMenu(AssignMenuModel assignMenuModel){
-        //TODO：持久化
+        //持久化
         //首先删除用户在该系统下的所有菜单
         RbacUserEntity userEntity = this.findById(assignMenuModel.getUserId());
         List<RbacMenuEntity> menuEntities = menuMapper.findMenusByUserId(userEntity.getId());
@@ -296,6 +300,7 @@ public class UserService {
             for (int i = 0;i < menuEntities.size(); i++){
                 RbacMenuEntity menuEntity = menuEntities.get(i);
                 if(menuEntity.getSystemId() == assignMenuModel.getSystemId()){
+                    userMapper.deleteUserMenu(userEntity.getId(),menuEntity.getId());
                     menuEntities.remove(menuEntity);
                     i--;
                 }
@@ -306,6 +311,9 @@ public class UserService {
         if(assignMenuModel.getUserMenu() != null && assignMenuModel.getUserMenu().length > 0){
             List<RbacMenuEntity> newMenus = menuMapper.findByIdIn(assignMenuModel.getUserMenu());
             menuEntities.addAll(newMenus);
+            for (RbacMenuEntity newMenu : newMenus) {
+                userMapper.insertUserMenu(userEntity.getId(),newMenu.getId());
+            }
         }
     }
 
@@ -314,7 +322,7 @@ public class UserService {
      * @param permissionModel
      */
     public void assignPermission(AssignPermissionModel permissionModel){
-        //TODO：持久化
+        //持久化
         //首先删除该系统下所有菜单
         RbacUserEntity userEntity = userMapper.selectByPrimaryKey(permissionModel.getId());
         List<RbacPermissionEntity> permissionEntities = permissionMapper.findPermissionsByUserId(userEntity.getId());
@@ -322,6 +330,7 @@ public class UserService {
             for (int i = 0;i < permissionEntities.size(); i++){
                 RbacPermissionEntity permissionEntity = permissionEntities.get(i);
                 if(permissionEntity.getSystemId() == permissionModel.getSystemId()){
+                    userMapper.deleteUserPermission(userEntity.getId(),permissionEntity.getId());
                     permissionEntities.remove(permissionEntity);
                     i--;
                 }
@@ -332,6 +341,9 @@ public class UserService {
         if(permissionModel.getPermission() != null && permissionModel.getPermission().length > 0){
             List<RbacPermissionEntity> newPermissions = permissionMapper.findByIdIn(permissionModel.getPermission());
             permissionEntities.addAll(newPermissions);
+            for (RbacPermissionEntity newPermission : newPermissions) {
+                userMapper.insertUserPermission(userEntity.getId(),newPermission.getId());
+            }
         }
     }
 
@@ -339,15 +351,22 @@ public class UserService {
      * 分配组织机构
      */
     public void assignOrganization(AssignOrganizationModel assignOrganizationModel){
-        //TODO：持久化
+        //持久化
         //首先删除用户在该系统下的所有菜单
         RbacUserEntity userEntity = this.findById(assignOrganizationModel.getUserId());
         List<RbacOrganizationEntity> organizationEntities = organizationMapper.findOrganizationByUserId(userEntity.getId());
+        for (RbacOrganizationEntity organizationEntity : organizationEntities) {
+            userMapper.deleteUserOrganization(userEntity.getId(),organizationEntity.getId());
+        }
         organizationEntities.clear();
+
         //然后插入用户菜单
         if(assignOrganizationModel.getUserOrganization() != null && assignOrganizationModel.getUserOrganization().length > 0){
             List<RbacOrganizationEntity> newOganizations = organizationMapper.findByIdIn(assignOrganizationModel.getUserOrganization());
             organizationEntities.addAll(newOganizations);
+            for (RbacOrganizationEntity newOganization : newOganizations) {
+                userMapper.insertUserOrganization(userEntity.getId(),newOganization.getId());
+            }
         }
 
     }
@@ -444,8 +463,12 @@ public class UserService {
                 RbacUserEntity userEntity = userMapper.findByUsername(username);
                 List<RbacRoleEntity> roleEntities = roleMapper.findByName("guest");
                 if(roleEntities != null && !roleEntities.isEmpty()){
-                    //TODO:数据持久化
+                    //持久化
 //                    userEntity.setRoles(roleEntities);
+                    for (RbacRoleEntity roleEntity : roleEntities) {
+                        userMapper.insertUserRole(userEntity.getId(),roleEntity.getId());
+                    }
+
                 }
                 githubUserEntity.setUserId(userEntity.getId());
             }

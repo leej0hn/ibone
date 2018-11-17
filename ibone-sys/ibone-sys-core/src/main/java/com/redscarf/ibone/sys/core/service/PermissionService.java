@@ -77,10 +77,10 @@ public class PermissionService {
      * 分页查询
      * @return
      */
-    public PageInfo<RbacPermissionEntity> findPageByNameAndPermissionValue(String name, String permissionValue ,PageRequest pageRequest){
+    public PageInfo<RbacPermissionEntity> findPageByNameAndPermissionValue(String searchKey, PageRequest pageRequest){
         PageHelper.startPage(pageRequest.getPage(), pageRequest.getSize());
         //分页查找
-        List<RbacPermissionEntity> permissionEntityList = permissionMapper.findPageByNameAndPermissionValue(name, permissionValue);
+        List<RbacPermissionEntity> permissionEntityList = permissionMapper.findPageByNameAndPermissionValue(searchKey);
 
         return new PageInfo<>(permissionEntityList);
     }

@@ -67,9 +67,9 @@ public class SystemService {
     }
 
 
-    public PageInfo<RbacSystemEntity> findPage(String name, String title ,String basepath, PageRequest pageRequest){
+    public PageInfo<RbacSystemEntity> findPage(String searchKey, PageRequest pageRequest){
         PageHelper.startPage(pageRequest.getPage(), pageRequest.getSize());
-        List<RbacSystemEntity> systemEntityList = rbacSystemMapper.findPageByNameAndPermissionValue(name, title,basepath);
+        List<RbacSystemEntity> systemEntityList = rbacSystemMapper.findPageByNameAndPermissionValue(searchKey);
         return new PageInfo<>(systemEntityList);
     }
 

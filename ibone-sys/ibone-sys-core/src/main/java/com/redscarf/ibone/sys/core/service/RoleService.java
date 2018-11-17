@@ -64,10 +64,10 @@ public class RoleService {
         return roleMapper.selectAll();
     }
 
-    public PageInfo<RbacRoleEntity> findPage(String name, String title, PageRequest pageRequest){
+    public PageInfo<RbacRoleEntity> findPage( String searchKey, PageRequest pageRequest){
         PageHelper.startPage(pageRequest.getPage(), pageRequest.getSize());
         //分页查找
-        List<RbacRoleEntity> permissionList = roleMapper.findPageByNameAndTitle(name, title);
+        List<RbacRoleEntity> permissionList = roleMapper.findPageByNameAndTitle(searchKey);
         return new PageInfo<>(permissionList);
     }
 
@@ -76,7 +76,7 @@ public class RoleService {
      * @param menuModel
      */
     public void assignMenu(AssignMenuModel menuModel){
-        //TODO：持久化
+        //持久化
         //首先删除该系统下所有菜单
         RbacRoleEntity roleEntity = roleMapper.selectByPrimaryKey(menuModel.getRoleId());
         List<RbacMenuEntity> menuEntities = menuMapper.findMenusByRoleId(roleEntity.getId());
@@ -84,9 +84,10 @@ public class RoleService {
             for (int i = 0;i < menuEntities.size(); i++){
                 RbacMenuEntity menuEntity = menuEntities.get(i);
                 if(menuEntity.getSystemId() == menuModel.getSystemId()){
+                    roleMapper.deleteRoleMenu(roleEntity.getId(),menuEntity.getId());
                     menuEntities.remove(menuEntity);
-                    menuMapper.delete(menuEntity);
                     i--;
+
                 }
             }
         }
@@ -95,7 +96,9 @@ public class RoleService {
         if(menuModel.getRoleMenu() != null && menuModel.getRoleMenu().length > 0){
             List<RbacMenuEntity> newMenus = menuMapper.findByIdIn(menuModel.getRoleMenu());
             menuEntities.addAll(newMenus);
-            menuMapper.insertList(newMenus);
+            for (RbacMenuEntity newMenu : newMenus) {
+                roleMapper.insertRoleMenu(roleEntity.getId(),newMenu.getId());
+            }
         }
     }
 
@@ -104,7 +107,7 @@ public class RoleService {
      * @param permissionModel
      */
     public void assignPermission(AssignPermissionModel permissionModel){
-        //TODO：持久化
+        //持久化
         //首先删除该系统下所有菜单
         RbacRoleEntity roleEntity = roleMapper.selectByPrimaryKey(permissionModel.getId());
         List<RbacPermissionEntity> permissionEntities = permissionMapper.findPermissionsByRoleId(roleEntity.getId());
@@ -112,8 +115,8 @@ public class RoleService {
             for (int i = 0;i < permissionEntities.size(); i++){
                 RbacPermissionEntity permissionEntity = permissionEntities.get(i);
                 if(permissionEntity.getSystemId() == permissionModel.getSystemId()){
+                    roleMapper.deleteRolePermission(roleEntity.getId(),permissionEntity.getId());
                     permissionEntities.remove(permissionEntity);
-                    permissionMapper.delete(permissionEntity);
                     i--;
                 }
             }
@@ -123,7 +126,9 @@ public class RoleService {
         if(permissionModel.getPermission() != null && permissionModel.getPermission().length > 0){
             List<RbacPermissionEntity> newPermissions = permissionMapper.findByIdIn(permissionModel.getPermission());
             permissionEntities.addAll(newPermissions);
-            permissionMapper.insertList(permissionEntities);
+            for (RbacPermissionEntity newPermission : newPermissions) {
+                roleMapper.insertRolePermission(roleEntity.getId(),newPermission.getId());
+            }
         }
     }
 

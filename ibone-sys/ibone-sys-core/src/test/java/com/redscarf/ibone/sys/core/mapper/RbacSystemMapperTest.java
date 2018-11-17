@@ -27,8 +27,11 @@ public class RbacSystemMapperTest extends BaseDaoTest {
 
     @Test
     public void testFindPageByNameAndPermissionValue() throws Exception{
-        List<RbacSystemEntity> list = mapper.findPageByNameAndPermissionValue("jbone","服务","http");
-        System.out.println(list);
+        List<RbacSystemEntity> roleList = mapper.findPageByNameAndPermissionValue("");
+        System.out.println(roleList);
+        List<RbacSystemEntity> roleList2 = mapper.findPageByNameAndPermissionValue("测试系统");
+        System.out.println(roleList2);
     }
+
 
 }

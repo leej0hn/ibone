@@ -54,20 +54,14 @@ public interface RbacSystemMapper extends IBaseMapper<RbacSystemEntity>{
             "SELECT   " + ALL_COLUMN,
             "FROM  "  + TABLE_NAME_AS,
             "<where> " ,
-            "<if test = \"name != null and name != '' \" > " ,
-            "AND name LIKE CONCAT('%', #{name}, '%') ",
-            "</if> " ,
-            "<if test = \"title != null and title != '' \"> " ,
-            "AND title LIKE CONCAT('%', #{title}, '%') " ,
-            "</if> " ,
-            "<if test = \"basepath != null and basepath != '' \"> " ,
-            "AND basepath LIKE CONCAT('%', #{basepath}, '%') " ,
+            "<if test = \"searchKey != null and searchKey != '' \" > " ,
+            "OR name LIKE CONCAT('%', #{searchKey}, '%') ",
+            "OR title LIKE CONCAT('%', #{searchKey}, '%') " ,
+            "OR basepath LIKE CONCAT('%', #{searchKey}, '%') " ,
             "</if> " ,
             "</where> " ,
             "</script>"
     })
-    List<RbacSystemEntity> findPageByNameAndPermissionValue(@Param("name") String name,
-                                                            @Param("title") String title,
-                                                            @Param("basepath")String basepath);
+    List<RbacSystemEntity> findPageByNameAndPermissionValue(@Param("searchKey") String searchKey);
 
 }

@@ -44,6 +44,25 @@
         <druid-spring-boot-starter.version>1.1.9</druid-spring-boot-starter.version>
 
         <hibernate-validator.version>6.0.13.Final</hibernate-validator.version>
+
+
+        <adminlte.version>2.3.11</adminlte.version>
+        <font-awesome.version>4.5.0</font-awesome.version>
+        <ionicons.version>2.0.1</ionicons.version>
+        <bootstrap-menu.version>1.0.14</bootstrap-menu.version>
+        <devicejs.version>0.2.7</devicejs.version>
+        <raphael.version>2.1.2</raphael.version>
+        <html5shiv.version>3.7.2</html5shiv.version>
+        <respond.version>1.4.2</respond.version>
+        <bootstrap-table.version>1.11.1</bootstrap-table.version>
+        <waves.version>0.7.5</waves.version>
+        <jquery-confirm.version>2.7.0</jquery-confirm.version>
+        <github-com-craftpip-jquery-confirm.versioin>3.3.2</github-com-craftpip-jquery-confirm.versioin>
+        <jquery-ui.version>1.12.1</jquery-ui.version>
+        <thymeleaf-extras-shiro.version>1.2.1</thymeleaf-extras-shiro.version>
+        <jquery-treegrid.version>0.3.0</jquery-treegrid.version>
+        <ztree.version>3.5.0</ztree.version>
+        <github-com-macek-jquery-serialize-object.version>2.5.0</github-com-macek-jquery-serialize-object.version>
     </properties>
 
     <dependencies>
@@ -377,6 +396,107 @@
                 <artifactId>hibernate-validator</artifactId>
                 <version>${hibernate-validator.version}</version>
             </dependency>
+
+            <!-- ui start -->
+            <dependency>
+                <groupId>org.webjars.bower</groupId>
+                <artifactId>adminlte</artifactId>
+                <version>${adminlte.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.webjars.bower</groupId>
+                <artifactId>font-awesome</artifactId>
+                <version>${font-awesome.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.webjars.bower</groupId>
+                <artifactId>ionicons</artifactId>
+                <version>${ionicons.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.webjars.npm</groupId>
+                <artifactId>bootstrap-menu</artifactId>
+                <version>${bootstrap-menu.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.webjars.bower</groupId>
+                <artifactId>devicejs</artifactId>
+                <version>${devicejs.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.webjars.bower</groupId>
+                <artifactId>raphael</artifactId>
+                <version>${raphael.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.webjars.bower</groupId>
+                <artifactId>html5shiv</artifactId>
+                <version>${html5shiv.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.webjars.bower</groupId>
+                <artifactId>respond</artifactId>
+                <version>${respond.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.webjars.bower</groupId>
+                <artifactId>bootstrap-table</artifactId>
+                <version>${bootstrap-table.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.webjars.bower</groupId>
+                <artifactId>waves</artifactId>
+                <version>${waves.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.webjars.bower</groupId>
+                <artifactId>jquery-confirm</artifactId>
+                <version>${jquery-confirm.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.webjars.bower</groupId>
+                <artifactId>github-com-craftpip-jquery-confirm</artifactId>
+                <version>${github-com-craftpip-jquery-confirm.versioin}</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>org.webjars.bower</groupId>
+                <artifactId>jquery-ui</artifactId>
+                <version>${jquery-ui.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.github.theborakompanioni</groupId>
+                <artifactId>thymeleaf-extras-shiro</artifactId>
+                <version>${thymeleaf-extras-shiro.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.webjars.bower</groupId>
+                <artifactId>jquery-treegrid</artifactId>
+                <version>${jquery-treegrid.version}</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>org.webjars.bower</groupId>
+                <artifactId>ztree</artifactId>
+                <version>${ztree.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.webjars.bower</groupId>
+                <artifactId>github-com-macek-jquery-serialize-object</artifactId>
+                <version>${github-com-macek-jquery-serialize-object.version}</version>
+            </dependency>
+
+            <!-- ui end -->
+
 
         </dependencies>
 

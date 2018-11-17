@@ -12,6 +12,7 @@
         <module>ibone-sm</module>
         <module>ibone-common</module>
         <module>ibone-sys</module>
+        <module>ibone-ui</module>
     </modules>
     <packaging>pom</packaging>
 

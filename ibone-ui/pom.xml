@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>ibone-parent</artifactId>
+        <groupId>com.redscarf.ibone</groupId>
+        <version>1.0.0</version>
+        <relativePath>../ibone-parent/pom.xml</relativePath>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>ibone-ui</artifactId>
+    <name>ibone-ui</name>
+    <version>1.0.0</version>
+
+    <packaging>jar</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>adminlte</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>font-awesome</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>ionicons</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars.npm</groupId>
+            <artifactId>bootstrap-menu</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>devicejs</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>raphael</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>html5shiv</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>respond</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>bootstrap-table</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>waves</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>jquery-confirm</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>github-com-craftpip-jquery-confirm</artifactId>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>jquery-ui</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.theborakompanioni</groupId>
+            <artifactId>thymeleaf-extras-shiro</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>jquery-treegrid</artifactId>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>ztree</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>github-com-macek-jquery-serialize-object</artifactId>
+        </dependency>
+
+
+    </dependencies>
+
+
+</project>

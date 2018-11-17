@@ -60,6 +60,16 @@ public interface RbacPermissionMapper extends IBaseMapper<RbacPermissionEntity>{
             "<script>",
             "SELECT   " + ALL_COLUMN,
             "FROM  "  + TABLE_NAME_AS,
+            "INNER JOIN  rbac_user_permission AS up ON ur.permission_id = a.id " ,
+            "WHERE up.user_id = #{userId} ",
+            "</script>"
+    })
+    List<RbacPermissionEntity> findPermissionsByUserId(@Param("userId") int userId);
+
+    @Select({
+            "<script>",
+            "SELECT   " + ALL_COLUMN,
+            "FROM  "  + TABLE_NAME_AS,
             "WHERE 1=1 " ,
             "AND  a.id IN ",
             "<foreach item='id' index='index' collection='ids' open='(' separator=',' close=')'> #{id} </foreach> " ,

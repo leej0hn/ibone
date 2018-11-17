@@ -1,6 +1,5 @@
 package com.redscarf.ibone.sys.core.mapper;
 
-import com.redscarf.ibone.sys.core.model.po.RbacMenuEntity;
 import com.redscarf.ibone.sys.core.model.po.RbacRoleEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -46,5 +45,38 @@ public interface RbacRoleMapper extends IBaseMapper<RbacRoleEntity>{
     })
     List<RbacRoleEntity> findPageByNameAndTitle(@Param("name") String name,
                                                 @Param("title") String title);
+
+
+    @Select({
+            "<script>",
+            "SELECT   " + ALL_COLUMN,
+            "FROM  "  + TABLE_NAME_AS,
+            "INNER JOIN  rbac_user_role AS ur ON ur.role_id = a.id " ,
+            "WHERE ur.user_id = #{userId} ",
+            "</script>"
+    })
+    List<RbacRoleEntity> findRolesByUserId(@Param("userId") int userId);
+
+
+    @Select({
+            "<script>",
+            "SELECT   " + ALL_COLUMN,
+            "FROM  "  + TABLE_NAME_AS,
+            "WHERE 1=1 " ,
+            "AND  a.id IN ",
+            "<foreach item='id' index='index' collection='ids' open='(' separator=',' close=')'> #{id} </foreach> " ,
+            "</script>"
+    })
+    List<RbacRoleEntity> findByIdIn(@Param("ids")int[] ids);
+
+
+    @Select({
+            "<script>",
+            "SELECT   " + ALL_COLUMN,
+            "FROM  "  + TABLE_NAME_AS,
+            "WHERE a.name = #{name} ",
+            "</script>"
+    })
+    List<RbacRoleEntity> findByName(@Param("name")String name);
 
 }

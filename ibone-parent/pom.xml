@@ -72,6 +72,11 @@
                 <artifactId>ibone-common</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.redscarf.ibone</groupId>
+                <artifactId>ibone-sys-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
             <!-- modules end   -->
 
             <dependency>

@@ -55,6 +55,17 @@ public interface RbacMenuMapper extends IBaseMapper<RbacMenuEntity>{
             "<script>",
             "SELECT   " + ALL_COLUMN,
             "FROM  "  + TABLE_NAME_AS,
+            "INNER JOIN  rbac_user_menu AS um ON um.menu_id = a.id " ,
+            "WHERE um.user_id = #{userId} ",
+            "</script>"
+    })
+    List<RbacMenuEntity> findMenusByUserId(@Param("userId") int userId);
+
+
+    @Select({
+            "<script>",
+            "SELECT   " + ALL_COLUMN,
+            "FROM  "  + TABLE_NAME_AS,
             "WHERE 1=1 " ,
             "AND  a.id IN ",
             "<foreach item='id' index='index' collection='ids' open='(' separator=',' close=')'> #{id} </foreach> " ,
@@ -62,4 +73,41 @@ public interface RbacMenuMapper extends IBaseMapper<RbacMenuEntity>{
     })
     List<RbacMenuEntity> findByIdIn(@Param("ids")int[] ids);
 
+
+    @Select({
+            "<script>",
+            "SELECT  DISTINCT " + ALL_COLUMN,
+            "FROM  "  + TABLE_NAME_AS,
+            "LEFT OUTER JOIN rbac_role_menu rm on rm.menu_id = a.id " ,
+            "LEFT OUTER JOIN rbac_role role on rm.role_id = role.id" ,
+            "WHERE 1=1 " ,
+            "AND  role.id IN ",
+            "<foreach item='roleId' index='index' collection='roleIds' open='(' separator=',' close=')'> #{roleId} </foreach> " ,
+            "AND a.pid = #{pid}",
+            "AND a.system_id = #{systemId}",
+            "ORDER BY a.orders DESC",
+            "</script>"
+    })
+    List<RbacMenuEntity> findDistinctByRolesInAndPidAndSystemIdOrderByOrdersDesc(@Param("roleIds") int[] roleIds ,
+                                                                                 @Param("pid") int pid ,
+                                                                                 @Param("systemId") int systemId);
+
+
+    @Select({
+            "<script>",
+            "SELECT  DISTINCT " + ALL_COLUMN,
+            "FROM  "  + TABLE_NAME_AS,
+            "LEFT OUTER JOIN rbac_user_menu um on um.menu_id = a.id ",
+            "LEFT OUTER JOIN rbac_user user on user.id = um.user_id ",
+            "WHERE 1=1 " ,
+            "AND  user.id IN ",
+            "<foreach item='userId' index='index' collection='userIds' open='(' separator=',' close=')'> #{userId} </foreach> " ,
+            "AND a.pid = #{pid}",
+            "AND a.system_id = #{systemId}",
+            "ORDER BY a.orders DESC",
+            "</script>"
+    })
+    List<RbacMenuEntity> findDistinctByUsersInAndPidAndSystemIdOrderByOrdersDesc(@Param("userIds") int[] userIds ,
+                                                                                 @Param("pid") int pid ,
+                                                                                 @Param("systemId") int systemId);
 }

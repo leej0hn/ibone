@@ -4,6 +4,8 @@ server:
 logging:
   file: /logs/ibone-sm-register
   config: classpath:ibone-logback.xml
+  level.com.redscarf.ibone: DEBUG
+
 spring:
   application:
     name: ibone-sm-register

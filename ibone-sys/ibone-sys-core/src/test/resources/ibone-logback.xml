@@ -86,7 +86,7 @@
         <appender-ref ref="ERROR" />
     </root>
 
-    <logger name="com.redscarf.demo2" level="DEBUG" >
+    <logger name="com.redscarf.ibone" level="DEBUG" >
         <appender-ref ref="DEBUG" />
     </logger>
 

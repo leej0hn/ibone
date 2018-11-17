@@ -76,6 +76,7 @@ public class RoleService {
      * @param menuModel
      */
     public void assignMenu(AssignMenuModel menuModel){
+        //TODO：持久化
         //首先删除该系统下所有菜单
         RbacRoleEntity roleEntity = roleMapper.selectByPrimaryKey(menuModel.getRoleId());
         List<RbacMenuEntity> menuEntities = menuMapper.findMenusByRoleId(roleEntity.getId());
@@ -103,6 +104,7 @@ public class RoleService {
      * @param permissionModel
      */
     public void assignPermission(AssignPermissionModel permissionModel){
+        //TODO：持久化
         //首先删除该系统下所有菜单
         RbacRoleEntity roleEntity = roleMapper.selectByPrimaryKey(permissionModel.getId());
         List<RbacPermissionEntity> permissionEntities = permissionMapper.findPermissionsByRoleId(roleEntity.getId());

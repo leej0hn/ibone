@@ -13,6 +13,7 @@
         <module>ibone-common</module>
         <module>ibone-sys</module>
         <module>ibone-ui</module>
+        <module>ibone-errors</module>
     </modules>
     <packaging>pom</packaging>
 

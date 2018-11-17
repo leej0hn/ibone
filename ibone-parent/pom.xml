@@ -63,6 +63,9 @@
         <jquery-treegrid.version>0.3.0</jquery-treegrid.version>
         <ztree.version>3.5.0</ztree.version>
         <github-com-macek-jquery-serialize-object.version>2.5.0</github-com-macek-jquery-serialize-object.version>
+
+        <pac4j-cas.version>2.3.1</pac4j-cas.version>
+        <buji-pac4j.version>3.2.0</buji-pac4j.version>
     </properties>
 
     <dependencies>
@@ -89,6 +92,16 @@
             <dependency>
                 <groupId>com.redscarf.ibone</groupId>
                 <artifactId>ibone-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.redscarf.ibone</groupId>
+                <artifactId>ibone-ui</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.redscarf.ibone</groupId>
+                <artifactId>ibone-errors</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -497,6 +510,18 @@
 
             <!-- ui end -->
 
+            <!-- errors start -->
+            <dependency>
+                <groupId>org.pac4j</groupId>
+                <artifactId>pac4j-cas</artifactId>
+                <version>${pac4j-cas.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.buji</groupId>
+                <artifactId>buji-pac4j</artifactId>
+                <version>${buji-pac4j.version}</version>
+            </dependency>
+            <!-- errors end -->
 
         </dependencies>
 

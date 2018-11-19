@@ -114,6 +114,11 @@
                 <artifactId>ibone-sys-api</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.redscarf.ibone</groupId>
+                <artifactId>ibone-sys-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
             <!-- modules end   -->
 
             <dependency>
@@ -370,6 +375,12 @@
             <dependency>
                 <groupId>org.apache.shiro</groupId>
                 <artifactId>shiro-core</artifactId>
+                <version>${shiro.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.shiro</groupId>
+                <artifactId>shiro-ehcache</artifactId>
                 <version>${shiro.version}</version>
             </dependency>
 

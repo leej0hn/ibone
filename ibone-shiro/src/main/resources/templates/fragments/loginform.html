@@ -1,0 +1,38 @@
+<div id="login" class="login-box">
+    <div class="login-box-body">
+        <p class="login-box-msg">用户名密码登录</p>
+        <form method="post" id="fm1"  action="login">
+
+            <h2 th:utext="#{screen.welcome.instructions}"></h2>
+
+
+
+
+            <section class="row btn-row">
+                <input type="hidden" name="execution" th:value="${flowExecutionKey}"/>
+                <input type="hidden" name="_eventId" value="submit"/>
+                <input type="hidden" name="geolocation"/>
+
+                <input class="btn btn-submit btn-block btn-flat"
+                       name="submit"
+                       accesskey="l"
+                       th:value="#{screen.welcome.button.login}"
+                       tabindex="6"
+                       type="submit"/>
+            </section>
+        </form>
+
+
+
+    </div>
+
+    <script type="text/javascript" th:inline="javascript">
+        var i = [[#{screen.welcome.button.loginwip}]]
+        $("#fm1").submit(function () {
+            $(":submit").attr("disabled", true);
+            $(":submit").attr("value", i);
+            return true;
+        });
+    </script>
+    <div th:replace="fragments/loginsidebar"/>
+</div>

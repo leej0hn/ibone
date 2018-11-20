@@ -14,7 +14,7 @@ import javax.annotation.PostConstruct;
  * 所有配置的入口
  */
 @Configuration
-@ConfigurationProperties(prefix = "jbone")
+@ConfigurationProperties(prefix = "ibone")
 public class IboneConfiguration {
     private Logger logger = LoggerFactory.getLogger(getClass());
     /**

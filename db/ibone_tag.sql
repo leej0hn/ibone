@@ -1,11 +1,11 @@
 /*
  Navicat MySQL Data Transfer
 
- Source Server         : jbone_root
+ Source Server         : ibone_root
  Source Server Type    : MySQL
  Source Server Version : 50711
  Source Host           : 121.42.174.77
- Source Database       : jbone_tag
+ Source Database       : ibone_tag
 
  Target Server Type    : MySQL
  Target Server Version : 50711
@@ -29,7 +29,7 @@ CREATE TABLE `tag_info` (
   `is_show` int(11) NOT NULL COMMENT '是否前台展示。一旦新增，不能修改\n0：不展示\n1：展示',
   `icon` varchar(200) DEFAULT NULL COMMENT '标签图标',
   `icon_type` int(11) DEFAULT NULL COMMENT 'icon类型，如果设置为2，则展示图片，否则展示加CSS图片的name\n1：CSS图标\n2：图片',
-  `click_target` varchar(200) NOT NULL COMMENT '点击后的跳转链接，如jbone-cms.majunwei.com/topic/111',
+  `click_target` varchar(200) NOT NULL COMMENT '点击后的跳转链接，如cms.ibone.com/topic/111',
   `time_validity` int(11) NOT NULL COMMENT '是否设置标签有效期。一旦新增，不能修改\n0：不设置有效期\n1：设置有效期',
   `start_time` timestamp NULL DEFAULT NULL COMMENT '当设置”time_validity”为1时，该值必填。有效期的开始时间。',
   `end_time` timestamp NULL DEFAULT NULL COMMENT '当设置”time_validity”为1时，该值必填。有效期的结束时间。',

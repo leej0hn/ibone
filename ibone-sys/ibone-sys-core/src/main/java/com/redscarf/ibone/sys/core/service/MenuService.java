@@ -23,30 +23,6 @@ public class MenuService {
         return menuModelList;
     }
 
-    private List<TreeMenuModel> getTreeMenu(int systemId,TreeMenuModel menuModel){
-        int pid = 0;
-        if(menuModel != null){
-            pid = menuModel.getId();
-        }
-        List<RbacMenuEntity> menuEntityList = rbacMenuMapper.findByPidAndSystemIdOrderByOrdersDesc(pid,systemId);
-        List<TreeMenuModel> menuModelList = new ArrayList<>();
-        if(menuEntityList != null && !menuEntityList.isEmpty()){
-            for (RbacMenuEntity menuEntity : menuEntityList){
-                TreeMenuModel treeMenuModel = new TreeMenuModel();
-                BeanUtils.copyProperties(menuEntity,treeMenuModel);
-                menuModelList.add(treeMenuModel);
-                getTreeMenu(systemId,treeMenuModel);
-            }
-
-            if (menuModel != null) {
-                menuModel.setChildren(menuModelList);
-            }
-
-        }
-        return menuModelList;
-    }
-
-
     public TreeMenuModel get(int id){
         RbacMenuEntity menuEntity = rbacMenuMapper.selectByPrimaryKey(id);
         TreeMenuModel menuModel = new TreeMenuModel();
@@ -68,6 +44,37 @@ public class MenuService {
     public void update(UpdateMenuModel menuModel){
         RbacMenuEntity menuEntity = rbacMenuMapper.selectByPrimaryKey(menuModel.getId());
         BeanUtils.copyProperties(menuModel,menuEntity);
-        rbacMenuMapper.insert(menuEntity);
+        rbacMenuMapper.updateByPrimaryKeySelective(menuEntity);
+    }
+
+    public List<RbacMenuEntity> findMenusByRoleId(int roleId){
+        return rbacMenuMapper.findMenusByRoleId(roleId);
+    }
+
+    public List<RbacMenuEntity> findMenusByUserId(int userId){
+        return rbacMenuMapper.findMenusByUserId(userId);
+    }
+
+    private List<TreeMenuModel> getTreeMenu(int systemId,TreeMenuModel menuModel){
+        int pid = 0;
+        if(menuModel != null){
+            pid = menuModel.getId();
+        }
+        List<RbacMenuEntity> menuEntityList = rbacMenuMapper.findByPidAndSystemIdOrderByOrdersDesc(pid,systemId);
+        List<TreeMenuModel> menuModelList = new ArrayList<>();
+        if(menuEntityList != null && !menuEntityList.isEmpty()){
+            for (RbacMenuEntity menuEntity : menuEntityList){
+                TreeMenuModel treeMenuModel = new TreeMenuModel();
+                BeanUtils.copyProperties(menuEntity,treeMenuModel);
+                menuModelList.add(treeMenuModel);
+                getTreeMenu(systemId,treeMenuModel);
+            }
+
+            if (menuModel != null) {
+                menuModel.setChildren(menuModelList);
+            }
+
+        }
+        return menuModelList;
     }
 }

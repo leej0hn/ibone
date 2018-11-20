@@ -1,0 +1,149 @@
+#服务
+server:
+  port: 20002
+
+logging:
+  config: classpath:ibone-logback.xml
+  file: E:\logs\ibone-sys-admin
+  level.com.redscarf.ibone: DEBUG
+  level.com.redscarf.ibone.sys.core.mapper: DEBUG
+
+spring:
+  application:
+    name: ibone-sys-admin
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password:
+  #rabbitmq配置
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+  thymeleaf:
+    cache: false
+    enabled: true
+  freemarker:
+    enabled: false
+  datasource:
+      url: jdbc:mysql://127.0.0.1:3306/ibone_sys?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8
+      username: root
+      password: 123
+      driver-class-name: com.mysql.jdbc.Driver
+      type: com.alibaba.druid.pool.DruidDataSource
+
+# MyBatis
+mybatis:
+  type-aliases-package: om.redscarf.ibone.sys.core.model.po
+  #mapper-locations: classpath*:mapper/*.xml
+  #configLocation: classpath:mybatis-config.xml
+
+# 通用Mapper
+mapper:
+  mappers: com.redscarf.ibone.sys.core.mapper.IBaseMapper
+  not-empty: false
+  identity: MYSQL
+
+# 分页插件
+pagehelper:
+  helperDialect: mysql
+  offsetAsPageNum: true
+  rowBoundsWithCount: true
+  pageSizeZero: true
+  reasonable: true
+  supportMethodsArguments: true
+  params: pageNum=start;pageSize=limit;pageSizeZero=zero;reasonable=heli;count=contsql
+
+#注册中心
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:10001/eureka
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+
+#Ibone配置
+ibone:
+  cas:
+    #CAS服务地址
+    casServerUrl: https://cas.ibone.com:8443/cas
+    #当前系统地址
+    currentServerUrlPrefix: http://sys-admin.ibone.com:20002
+    #过滤器地址,CAS认证通过后会回掉到ibone.cas.currentServerUrlPrefix/ibone.cas.casFilterUrlPattern
+    casFilterUrlPattern: /cas
+    #登录页面
+    loginUrl: /login
+    #登录成功后的跳转路径，默认"/"
+    successUrl: /index/welcome
+    #未授权的跳转路径，默认"/403"
+    unauthorizedUrl: /403
+    #客户端Session失效时间，默认30分钟
+    clientSessionTimeout: 180000
+    #权限过滤规则
+    filterChainDefinition: |
+      /health: anon
+      /archaius: anon
+      /refresh: anon
+      /configprops: anon
+      /env/**: anon
+      /service-registry/**: anon
+      /auditevents: anon
+      /pause: anon
+      /dump: anon
+      /loggers/**: anon
+      /resume: anon
+      /metrics/**: anon
+      /channels: anon
+      /beans: anon
+      /mappings: anon
+      /autoconfig: anon
+      /trace: anon
+      /hystrix.stream/**: anon
+      /info: anon
+      /restart: anon
+      /heapdump: anon
+      /features: anon
+      /webjars/**: anon
+      /static/**: anon
+      /templates/**: anon
+      /**: authc
+
+  #当前系统名，在系统管理里面对应的名字
+  sys:
+    serverName: ibone-sys-admin
+    jdbc:
+      url: jdbc:mysql://127.0.0.1:3306/ibone_sys?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=TRUE
+      username: root
+      password: 123
+      driverClassName: com.mysql.jdbc.Driver
+      maxActive: 10
+      initialSize: 2
+      maxWait: 10000
+
+# info接口返回值
+info:
+  app:
+    name: ${spring.application.name}
+    version: 1.0.0
+  java:
+    version: ${java.version}
+  code:
+    git: https://github.com/leej0hn/ibone
+  domain: https://github.com/leej0hn/ibone
+
+# 启用超时设置
+hystrix.command.default.execution.timeout.enabled: true
+# 熔断时间为10S
+hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 10000
+# 使用线程隔离熔断
+hystrix.command.default.execution.isolation.strategy: THREAD
+# 核心线程数100
+hystrix.threadpool.default.coreSize: 100
+# 超时时熔断
+hystrix.command.default.execution.isolation.thread.interruptOnTimeout: true
+# 取消时是否熔断
+hystrix.command.default.execution.isolation.thread.interruptOnCancel: false

@@ -1,13 +1,14 @@
 package com.redscarf.ibone.shiro;
 
 import com.redscarf.ibone.configuration.IboneConfiguration;
+import com.redscarf.ibone.shiro.filter.FormAuthenticationFilter;
 import com.redscarf.ibone.shiro.listener.IboneSessionListener;
 import com.redscarf.ibone.shiro.reaml.IboneRealm;
 import com.redscarf.ibone.shiro.session.IboneSessionDao;
 import com.redscarf.ibone.shiro.session.IboneSessionFactory;
 import com.redscarf.ibone.shiro.session.IboneSessionTicketStore;
+import com.redscarf.ibone.sys.core.service.UserService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.session.SessionListener;
 import org.apache.shiro.session.mgt.SessionFactory;
@@ -26,10 +27,8 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.filter.DelegatingFilterProxy;
 
 import javax.servlet.DispatcherType;
-import java.util.Arrays;
-import java.util.EnumSet;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import javax.servlet.Filter;
+import java.util.*;
 
 /**
  * Shiro集成Cas配置
@@ -42,22 +41,22 @@ public class ShiroConfiguration {
 
 
     @Bean
-    IboneSessionTicketStore getSessionTicketStore(StringRedisTemplate stringRedisTemplate, IboneConfiguration jboneConfiguration){
+    IboneSessionTicketStore getSessionTicketStore(StringRedisTemplate stringRedisTemplate, IboneConfiguration iboneConfiguration){
         IboneSessionTicketStore sessionTicketStore = new IboneSessionTicketStore();
         sessionTicketStore.setRedisTemplate(stringRedisTemplate);
-        sessionTicketStore.setTimeout(jboneConfiguration.getCas().getClientSessionTimeout());
+        sessionTicketStore.setTimeout(iboneConfiguration.getCas().getClientSessionTimeout());
         return sessionTicketStore;
     }
 
 
     @Bean
-    public IboneRealm getIboneCasRealm(EhCacheManager ehCacheManager,  IboneConfiguration iboneConfiguration){
-        IboneRealm realm = new IboneRealm(ehCacheManager, iboneConfiguration.getSys().getServerName());
+    public IboneRealm iboneRealm(EhCacheManager ehCacheManager, UserService userService, IboneConfiguration iboneConfiguration){
+        IboneRealm realm = new IboneRealm(ehCacheManager, userService,iboneConfiguration.getSys().getServerName());
         return realm;
     }
 
     @Bean
-    public EhCacheManager getEhCacheManager() {
+    public EhCacheManager iboneEhCacheManager() {
         EhCacheManager em = new EhCacheManager();
         em.setCacheManagerConfigFile("classpath:ehcache-shiro.xml");
         return em;
@@ -92,11 +91,12 @@ public class ShiroConfiguration {
     }
 
     @Bean(name = "securityManager")
-    public DefaultWebSecurityManager getDefaultWebSecurityManager(IboneRealm iboneCasRealm,DefaultWebSessionManager sessionManager) {
+    public DefaultWebSecurityManager getDefaultWebSecurityManager(IboneRealm iboneCasRealm,DefaultWebSessionManager sessionManager,
+                                                                  EhCacheManager iboneEhCacheManager) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         securityManager.setRealm(iboneCasRealm);
         //用户授权/认证信息Cache, 采用EhCache 缓存
-        securityManager.setCacheManager(getEhCacheManager());
+        securityManager.setCacheManager(iboneEhCacheManager);
 //        securityManager.setSubjectFactory(new Pac4jSubjectFactory());
         securityManager.setSessionManager(sessionManager);
 
@@ -125,10 +125,9 @@ public class ShiroConfiguration {
     @Bean
     public SimpleCookie getCookie(){
         SimpleCookie cookie = new SimpleCookie();
-        cookie.setName("jbone.session.id");
+        cookie.setName("ibone.session.id");
         return cookie;
     }
-
 
     @Bean(name = "sessionListener")
     public SessionListener getSessionListener(){
@@ -151,29 +150,34 @@ public class ShiroConfiguration {
      * 加载shiroFilter权限控制规则
      */
     private void loadShiroFilterChain(ShiroFilterFactoryBean shiroFilterFactoryBean,IboneConfiguration iboneConfiguration){
-        Map<String, String> filterChainDefinitionMap = new LinkedHashMap<String,String>();
+        String filterChainDefinition = iboneConfiguration.getCas().getFilterChainDefinition();
+        shiroFilterFactoryBean.setFilterChainDefinitions(filterChainDefinition);
+    }
 
-
-        //添加ibone.cas的配置规则
-        if(iboneConfiguration.getCas().getFilterChainDefinition() != null){
-            filterChainDefinitionMap.putAll(iboneConfiguration.getCas().getFilterChainDefinition());
-        }
-        String common = filterChainDefinitionMap.get("/**");
-        filterChainDefinitionMap.put("/**", "security" + (StringUtils.isNotBlank(common) ? ("," + common) : ""));
-        shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
+    /**
+     * Form登录过滤器
+     * [重要提示]自定义的filter不可以直接实例化，否则会进入全局webFilter
+     */
+    private FormAuthenticationFilter shiroAuthcFilter() {
+        return new FormAuthenticationFilter();
     }
 
     /**
      * ShiroFilter
      */
     @Bean(name = "shiroFilter")
-    public ShiroFilterFactoryBean getShiroFilterFactoryBean(DefaultWebSecurityManager securityManager, IboneConfiguration iboneConfiguration, StringRedisTemplate redisTemplate, DefaultWebSessionManager sessionManager) {
-        ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
+    public ShiroFilterFactoryBean getShiroFilterFactoryBean(DefaultWebSecurityManager securityManager,
+                                                            IboneConfiguration iboneConfiguration,
+                                                            DefaultWebSessionManager sessionManager) {
 
+        ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         // SecurityManager，Shiro安全管理器
         shiroFilterFactoryBean.setSecurityManager(securityManager);
+        Map<String, Filter> filters = shiroFilterFactoryBean.getFilters();
+        //[重要提示]自定义的filter不可以直接实例化，否则会进入全局webFilter
+        filters.put("authc",shiroAuthcFilter());
 
-        shiroFilterFactoryBean.setLoginUrl(iboneConfiguration.getCas().getEncodedLoginUrl());
+        shiroFilterFactoryBean.setLoginUrl(iboneConfiguration.getCas().getLoginUrl());
         shiroFilterFactoryBean.setSuccessUrl(iboneConfiguration.getCas().getSuccessUrl());
         shiroFilterFactoryBean.setUnauthorizedUrl(iboneConfiguration.getCas().getUnauthorizedUrl());
 

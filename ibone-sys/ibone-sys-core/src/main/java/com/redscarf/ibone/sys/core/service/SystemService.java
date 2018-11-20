@@ -29,7 +29,7 @@ public class SystemService {
     public void update(UpdateSystemModel systemModel){
         RbacSystemEntity systemEntity = rbacSystemMapper.selectByPrimaryKey(systemModel.getId());
         BeanUtils.copyProperties(systemModel,systemEntity);
-        rbacSystemMapper.insert(systemEntity);
+        rbacSystemMapper.updateByPrimaryKeySelective(systemEntity);
     }
 
     public void delete(String ids){

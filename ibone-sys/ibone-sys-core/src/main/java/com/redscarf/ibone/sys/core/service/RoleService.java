@@ -43,7 +43,7 @@ public class RoleService {
     public void update(UpdateRoleModel roleModel){
         RbacRoleEntity roleEntity = roleMapper.selectByPrimaryKey(roleModel.getId());
         BeanUtils.copyProperties(roleModel,roleEntity);
-        roleMapper.insert(roleEntity);
+        roleMapper.updateByPrimaryKeySelective(roleEntity);
     }
 
     public void delete(String ids){
@@ -151,5 +151,9 @@ public class RoleService {
         SimpleRoleModel roleModel = new SimpleRoleModel();
         BeanUtils.copyProperties(roleEntity,roleModel);
         return roleModel;
+    }
+
+    public List<RbacRoleEntity> findRolesByUserId(int userId){
+        return roleMapper.findRolesByUserId(userId);
     }
 }

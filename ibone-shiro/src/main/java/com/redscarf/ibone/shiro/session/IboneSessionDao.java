@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Session持久化
  *
- * @author majunwei
+ * @author
  */
 public class IboneSessionDao extends CachingSessionDAO {
 

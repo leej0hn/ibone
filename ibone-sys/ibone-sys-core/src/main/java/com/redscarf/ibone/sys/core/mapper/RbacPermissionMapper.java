@@ -57,7 +57,7 @@ public interface RbacPermissionMapper extends IBaseMapper<RbacPermissionEntity>{
             "<script>",
             "SELECT   " + ALL_COLUMN,
             "FROM  "  + TABLE_NAME_AS,
-            "INNER JOIN  rbac_user_permission AS up ON ur.permission_id = a.id " ,
+            "INNER JOIN  rbac_user_permission AS up ON up.permission_id = a.id " ,
             "WHERE up.user_id = #{userId} ",
             "</script>"
     })

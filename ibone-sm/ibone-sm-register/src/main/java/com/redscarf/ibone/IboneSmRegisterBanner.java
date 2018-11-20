@@ -1,4 +1,4 @@
-package com.redscarf.ibone.sm.register;
+package com.redscarf.ibone;
 
 
 import com.redscarf.ibone.common.boot.AbastractIboneBanner;

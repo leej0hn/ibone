@@ -71,6 +71,11 @@ public class OrganizationService {
     public void update(UpdateOrganizationModel organizationModel){
         RbacOrganizationEntity organizationEntity = rbacOrganizationMapper.selectByPrimaryKey(organizationModel.getId());
         BeanUtils.copyProperties(organizationModel,organizationEntity);
-        rbacOrganizationMapper.insert(organizationEntity);
+        rbacOrganizationMapper.updateByPrimaryKeySelective(organizationEntity);
+    }
+
+
+   public List<RbacOrganizationEntity> findOrganizationByUserId(int userId){
+        return rbacOrganizationMapper.findOrganizationByUserId(userId);
     }
 }

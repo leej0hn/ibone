@@ -15,8 +15,8 @@
 
     <properties>
         <cas.version>5.2.0</cas.version>
-        <spring.cloud.version>Finchley.RELEASE</spring.cloud.version>
-        <spring.boot.version>2.1.0.RELEASE</spring.boot.version>
+        <spring.cloud.version>Finchley.SR1</spring.cloud.version>
+        <spring.boot.version>2.0.3.RELEASE</spring.boot.version>
         <shiro.version>1.4.0</shiro.version>
         <ibone.version>1.0.0</ibone.version>
         <jackson.version>2.9.6</jackson.version>
@@ -59,7 +59,7 @@
         <jquery-confirm.version>2.7.0</jquery-confirm.version>
         <github-com-craftpip-jquery-confirm.versioin>3.3.2</github-com-craftpip-jquery-confirm.versioin>
         <jquery-ui.version>1.12.1</jquery-ui.version>
-        <thymeleaf-extras-shiro.version>1.2.1</thymeleaf-extras-shiro.version>
+        <thymeleaf-extras-shiro.version>2.0.0</thymeleaf-extras-shiro.version>
         <jquery-treegrid.version>0.3.0</jquery-treegrid.version>
         <ztree.version>3.5.0</ztree.version>
         <github-com-macek-jquery-serialize-object.version>2.5.0</github-com-macek-jquery-serialize-object.version>
@@ -117,6 +117,16 @@
             <dependency>
                 <groupId>com.redscarf.ibone</groupId>
                 <artifactId>ibone-sys-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.redscarf.ibone</groupId>
+                <artifactId>ibone-sm-monitor-publisher</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.redscarf.ibone</groupId>
+                <artifactId>ibone-shiro</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <!-- modules end   -->

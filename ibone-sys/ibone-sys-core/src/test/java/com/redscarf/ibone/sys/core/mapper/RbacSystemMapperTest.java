@@ -21,7 +21,7 @@ public class RbacSystemMapperTest extends BaseDaoTest {
 
     @Test
     public void testFindByServiceCasFilterOrderByServiceEvaluationOrderDesc() throws Exception{
-        List<RbacSystemEntity> list = mapper.findByServiceCasFilterOrderByServiceEvaluationOrderDesc("http://jbone-sm-admin.majunwei.com:10002/cas111");
+        List<RbacSystemEntity> list = mapper.findByServiceCasFilterOrderByServiceEvaluationOrderDesc("http://sm-admin.ibone.com:10002/cas111");
         System.out.println(list);
     }
 

@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class IboneErrorsPageConfiguration {
     @Bean
-    public IboneErrorPageRegister getJboneErrorPageRigister(){
+    public IboneErrorPageRegister getIboneErrorPageRigister(){
         return new IboneErrorPageRegister();
     }
 

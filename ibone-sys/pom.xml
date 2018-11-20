@@ -15,6 +15,7 @@
     <modules>
         <module>ibone-sys-api</module>
         <module>ibone-sys-core</module>
+        <module>ibone-sys-admin</module>
     </modules>
     <packaging>pom</packaging>
 

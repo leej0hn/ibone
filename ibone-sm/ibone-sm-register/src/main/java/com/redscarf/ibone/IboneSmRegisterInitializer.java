@@ -1,4 +1,4 @@
-package com.redscarf.ibone.sm.register;
+package com.redscarf.ibone;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;

@@ -1,8 +1,8 @@
-CREATE DATABASE  IF NOT EXISTS `jbone_zipkin` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_bin */;
-USE `jbone_zipkin`;
+CREATE DATABASE  IF NOT EXISTS `ibone_zipkin` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_bin */;
+USE `ibone_zipkin`;
 -- MySQL dump 10.13  Distrib 5.7.17, for macos10.12 (x86_64)
 --
--- Host: localhost    Database: jbone_zipkin
+-- Host: localhost    Database: ibone_zipkin
 -- ------------------------------------------------------
 -- Server version	5.7.20
 

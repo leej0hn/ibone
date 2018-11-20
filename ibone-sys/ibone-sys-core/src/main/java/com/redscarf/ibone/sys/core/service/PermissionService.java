@@ -43,7 +43,7 @@ public class PermissionService {
             throw new IboneException("没有找到权限");
         }
         BeanUtils.copyProperties(updateModel,permissionEntity);
-        permissionMapper.insert(permissionEntity);
+        permissionMapper.updateByPrimaryKeySelective(permissionEntity);
     }
 
     /**
@@ -129,6 +129,14 @@ public class PermissionService {
         PermissionBaseInfoModel baseInfoModel = new PermissionBaseInfoModel();
         BeanUtils.copyProperties(permissionEntity,baseInfoModel);
         return baseInfoModel;
+    }
+
+    public List<RbacPermissionEntity> findPermissionsByRoleId(int roleId){
+        return permissionMapper.findPermissionsByRoleId(roleId);
+    }
+
+    public List<RbacPermissionEntity> findPermissionsByUserId(int userId){
+        return permissionMapper.findPermissionsByUserId(userId);
     }
 
 }

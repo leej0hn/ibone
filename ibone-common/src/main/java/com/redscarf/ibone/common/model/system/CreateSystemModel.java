@@ -1,7 +1,8 @@
 package com.redscarf.ibone.common.model.system;
 
 import lombok.Data;
-import org.hibernate.validator.constraints.NotBlank;
+
+import javax.validation.constraints.NotBlank;
 
 @Data
 public class CreateSystemModel {

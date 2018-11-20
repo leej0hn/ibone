@@ -36,20 +36,17 @@
             <name>aliyun Repository</name>
             <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
         </repository>
-
         <repository>
             <id>java-repos</id>
             <name>Java Repository</name>
             <url>http://download.java.net/maven/2/</url>
         </repository>
 
-        <!--
         <repository>
             <id>springsource-repos</id>
             <name>SpringSource Repository</name>
             <url>http://repo.spring.io/release/</url>
         </repository>
-        -->
 
         <repository>
             <id>central-repos</id>

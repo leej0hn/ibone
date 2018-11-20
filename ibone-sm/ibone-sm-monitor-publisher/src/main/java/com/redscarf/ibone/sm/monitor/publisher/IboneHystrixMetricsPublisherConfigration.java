@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class IboneHystrixMetricsPublisherConfigration {
     @Bean
-    public IboneHystrixMetricsPublisher getJboneHystrixMetricsPublisher(){
+    public IboneHystrixMetricsPublisher getIboneHystrixMetricsPublisher(){
         IboneHystrixMetricsPublisher publisher = new IboneHystrixMetricsPublisher();
         HystrixPlugins.getInstance().registerMetricsPublisher(publisher);
         return publisher;

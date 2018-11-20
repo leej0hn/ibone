@@ -28,12 +28,12 @@ public class IboneHystrixMetricsPublisherCommand implements HystrixMetricsPublis
 
     @Override
     public void initialize() {
-        logger.info("JboneHystrixMetricsPublisherCommand initialize start");
+        logger.info("IboneHystrixMetricsPublisherCommand initialize start");
         logger.info("commandKey: {}",commandKey);
         logger.info("commandGroupKey: {}",commandGroupKey);
         logger.info("metrics: {}",metrics.getHealthCounts());
         logger.info("circuitBreaker: {}",circuitBreaker.isOpen());
         logger.info("properties: {}",properties);
-        logger.info("JboneHystrixMetricsPublisherCommand initialize end.");
+        logger.info("IboneHystrixMetricsPublisherCommand initialize end.");
     }
 }

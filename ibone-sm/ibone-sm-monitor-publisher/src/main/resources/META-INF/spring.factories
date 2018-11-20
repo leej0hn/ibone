@@ -1,1 +1,1 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.redscarf.ibone.sm.monitor.publisher.IboneHystrixMetricsPublisherConfigration
+#org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.redscarf.ibone.sm.monitor.publisher.IboneHystrixMetricsPublisherConfigration

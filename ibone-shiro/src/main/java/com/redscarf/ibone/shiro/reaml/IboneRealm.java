@@ -1,28 +1,37 @@
 package com.redscarf.ibone.shiro.reaml;
 
-import com.redscarf.ibone.sys.api.UserApi;
+import com.redscarf.ibone.sys.api.dto.response.UserInfoResponseDTO;
+import com.redscarf.ibone.sys.core.service.UserService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationInfo;
-import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authc.SimpleAuthenticationInfo;
+import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.subject.SimplePrincipalCollection;
+import org.apache.shiro.util.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 @Slf4j
 public class IboneRealm extends AuthorizingRealm {
     private static final Logger logger = LoggerFactory.getLogger(IboneRealm.class);
 
     private String serverName;
+    private UserService userService;
 
-    public IboneRealm(EhCacheManager ehCacheManager,  String serverName){
+    public IboneRealm(EhCacheManager ehCacheManager,UserService userService,  String serverName){
+        logger.info("IboneRealm constructor...");
+        //设置支付的Token类
+        setAuthenticationTokenClass(UsernamePasswordToken.class);
         this.setCacheManager(ehCacheManager);
         this.serverName = serverName;
+        this.userService = userService;
     }
 
 
@@ -32,8 +41,15 @@ public class IboneRealm extends AuthorizingRealm {
         /**
          * 将用户对象保存为身份信息，用于系统获取用户信息
          */
-        SimpleAuthenticationInfo saInfo = new SimpleAuthenticationInfo("test", "test", getName());
-        return saInfo;
+        String username = "ibone";
+        String serverName = "ibone-sys-admin";
+        UserInfoResponseDTO userModel = userService.getUserDetailByNameAndServerName(username, serverName);
+
+        List<Object> principals = CollectionUtils.asList(new Object[]{userModel});
+        SimplePrincipalCollection principalCollection = new SimplePrincipalCollection(principals, this.getName());
+
+        return new SimpleAuthenticationInfo(principalCollection,token.getCredentials());
+
     }
 
     /**
@@ -46,7 +62,26 @@ public class IboneRealm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         logger.info("--加载Shiro权限认证--");
 
+        UserInfoResponseDTO userModel = principals.oneByType(UserInfoResponseDTO.class);
+        Set<String> roles = userModel.getRoles();
+        Set<String> permissions = userModel.getPermissions();
+
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+
+        if(roles != null && !roles.isEmpty()){
+            Iterator<String> iterator = roles.iterator();
+            while (iterator.hasNext()){
+                info.addRole(iterator.next());
+            }
+        }
+
+        if(permissions != null && !permissions.isEmpty()){
+            Iterator<String> iterator = permissions.iterator();
+            while (iterator.hasNext()){
+                info.addStringPermission(iterator.next());
+            }
+        }
+
         return info;
     }
 }

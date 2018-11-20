@@ -11,11 +11,11 @@ public class CasProperties implements Serializable {
     /**
      * CAS服务端URL
      */
-    private String casServerUrl = "https://cas.majunwei.com:8443/cas";
+    private String casServerUrl = "https://cas.ibone.com:8443/cas";
     /**
      * 登录URL
      */
-    private String loginUrl =  "/login";;
+    private String loginUrl =  "/login";
     /**
      * 推出登录URL
      */
@@ -32,7 +32,7 @@ public class CasProperties implements Serializable {
     /**
      * 成功后跳转的默认路径
      */
-    private String successUrl = "/";
+    private String successUrl = "/index";
 
     /**
      * 没有权限的路径
@@ -47,7 +47,7 @@ public class CasProperties implements Serializable {
     /**
      * 权限过滤规则，限制需要CAS过滤的请求路径
      */
-    private LinkedHashMap<String,String> filterChainDefinition = new LinkedHashMap<String,String>();
+    private String filterChainDefinition ;
 
     public String getCasServerUrl() {
         return casServerUrl;
@@ -89,11 +89,11 @@ public class CasProperties implements Serializable {
         this.casFilterUrlPattern = casFilterUrlPattern;
     }
 
-    public LinkedHashMap<String, String> getFilterChainDefinition() {
+    public String getFilterChainDefinition() {
         return filterChainDefinition;
     }
 
-    public void setFilterChainDefinition(LinkedHashMap<String, String> filterChainDefinition) {
+    public void setFilterChainDefinition(String filterChainDefinition) {
         this.filterChainDefinition = filterChainDefinition;
     }
 

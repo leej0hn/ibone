@@ -225,7 +225,7 @@ public class UserService {
         //不修改密码
         BeanUtils.copyProperties(userModel,userEntity,"password");
 
-        userMapper.insert(userEntity);
+        userMapper.updateByPrimaryKeySelective(userEntity);
     }
 
     /**

@@ -3,15 +3,11 @@
         <p class="login-box-msg">用户名密码登录</p>
         <form method="post" id="fm1"  action="login">
 
-            <h2 th:utext="#{screen.welcome.instructions}"></h2>
-
-
-
+            <div class="alert alert-danger" >
+                <span >errors</span>
+            </div>
 
             <section class="row btn-row">
-                <input type="hidden" name="execution" th:value="${flowExecutionKey}"/>
-                <input type="hidden" name="_eventId" value="submit"/>
-                <input type="hidden" name="geolocation"/>
 
                 <input class="btn btn-submit btn-block btn-flat"
                        name="submit"
@@ -34,5 +30,4 @@
             return true;
         });
     </script>
-    <div th:replace="fragments/loginsidebar"/>
 </div>

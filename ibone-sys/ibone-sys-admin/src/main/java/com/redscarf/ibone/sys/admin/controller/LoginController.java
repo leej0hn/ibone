@@ -1,4 +1,4 @@
-package com.redscarf.ibone.shiro.controller;
+package com.redscarf.ibone.sys.admin.controller;
 
 import com.redscarf.ibone.configuration.IboneConfiguration;
 import com.redscarf.ibone.shiro.utils.UserUtils;

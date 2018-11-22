@@ -1,4 +1,4 @@
-package com.redscarf.ibone.shiro.controller;
+package com.redscarf.ibone.sys.admin.controller;
 
 import com.redscarf.ibone.configuration.IboneConfiguration;
 import lombok.extern.slf4j.Slf4j;
